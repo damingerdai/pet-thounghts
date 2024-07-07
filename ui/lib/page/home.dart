@@ -78,7 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text(widget.title, style: const TextStyle(fontSize: 16), textAlign: TextAlign.center),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -86,10 +87,11 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             const Text(
               'I know what your pet is thinking!',
+              style: TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 20),
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 24),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
@@ -100,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   minimumSize: const Size.fromHeight(40),
