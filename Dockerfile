@@ -5,14 +5,33 @@ ENV PYTHONUNBUFFERED=1
 
 LABEL maintainer="Arthur Ming <mingguobin@live.com>"
 
-COPY requirements.txt /tmp/requirements.txt
-RUN pip install --no-cache-dir -r /tmp/requirements.txt
+# Configure Poetry
+ENV POETRY_VERSION=1.8.3
+ENV POETRY_HOME=/opt/poetry
+ENV POETRY_VENV=/opt/poetry-venv
+ENV POETRY_CACHE_DIR=/opt/.cache
 
-COPY . /app
+
+
+# Install poetry separated from system interpreter
+RUN python3 -m venv $POETRY_VENV \
+    && $POETRY_VENV/bin/pip install -U pip setuptools \
+    && $POETRY_VENV/bin/pip install poetry==${POETRY_VERSION}
+
+
+
+# Add `poetry` to PATH
+ENV PATH="${PATH}:${POETRY_VENV}/bin"
 
 WORKDIR /app
 
-ENV PYTHONPATH=/app
-EXPOSE 8080
 
-CMD ["python", "main.py"]
+# Install dependencies
+COPY poetry.lock pyproject.toml ./
+RUN poetry install
+
+
+# Run your app
+COPY . /app
+
+CMD [ "poetry", "run", "python", "main.py" ]

@@ -1,15 +1,11 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-import platform
-import os
-import gunicorn.app
-
 from fastapi import FastAPI
 from routers import file, ping
 
 app = FastAPI(
-    title="pet throught", version="1.0.0", description="a api server for pet throught"
+    title="pet throught", version="1.0.0", description="a api server for pet thoughts"
 )
 
 app.include_router(ping.router)
